@@ -220,12 +220,10 @@ function move(e) {
 // 拖动进度条PC端
 let isDown = false
 $ball.onmousedown = function (e) {
-    console.log(1);
     e.preventDefault()
     isDown = true
 }
 $panel.onmouseup = function (e) {
-    console.log(2);
     e.preventDefault()
     isDown = false
 }
@@ -239,12 +237,10 @@ $panel.onmousemove = move
 
 // 拖动进度条移动端
 $proContainer.addEventListener('touchstart',function (e) {
-    console.log(3);
     isDown = true    
 })
 
 $panel.addEventListener('touchend',function (e) {
-    console.log(4);
     isDown = false
 })
 
