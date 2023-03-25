@@ -66,6 +66,8 @@ const $iconGoStart = $('.icon-go-start')
 const $iconGoEnd = $('.icon-go-end')
 const $ball = $('.progress .ball')
 const $panel = $('.panel')
+const $iconList = $('.icon-list')
+const $songList = $('.songList')
 
 
 const audio = new Audio()
@@ -204,17 +206,16 @@ $ball.onclick = function (e) {
 let colock2 = null //优化播放卡顿
 function move(e) {
     e.preventDefault()
-    console.log(5);
     if (isDown) {
         let percent
-            e.offsetX ? percent = e.offsetX / $proContainer.offsetWidth : percent = (e.touches[0].clientX - $proContainer.getBoundingClientRect().x) / $proContainer.offsetWidth
-            $progress.style.width = percent * 100 + '%'
+        e.offsetX ? percent = e.offsetX / $proContainer.offsetWidth : percent = (e.touches[0].clientX - $proContainer.getBoundingClientRect().x) / $proContainer.offsetWidth
+        $progress.style.width = percent * 100 + '%'
         if (colock2) {
             clearTimeout(colock2)
         }
-        colock2 = setTimeout(() => {          
+        colock2 = setTimeout(() => {
             audio.currentTime = audio.duration * percent
-        }, 50)   
+        }, 50)
     }
 }
 // 拖动进度条PC端
@@ -236,12 +237,53 @@ $panel.onmousemove = move
 
 
 // 拖动进度条移动端
-$proContainer.addEventListener('touchstart',function (e) {
-    isDown = true    
+$proContainer.addEventListener('touchstart', function (e) {
+    isDown = true
 })
 
-$panel.addEventListener('touchend',function (e) {
+$panel.addEventListener('touchend', function (e) {
     isDown = false
 })
 
-$panel.addEventListener('touchmove',move)
+$panel.addEventListener('touchmove', move)
+
+
+//点击歌单事件用到的函数
+function setlist (){
+    list.forEach(function (a,i) {
+        const $li = document.createElement('li')
+        $li.classList.add('name')
+        $li.innerText = a.title
+        const $span = document.createElement('span')
+        $span.classList.add('author')
+        $span.innerText = (`— ${a.author}`)
+        $li.append($span)
+        $songList.append($li)
+        if(i === index){
+            $li.classList.add('ing')
+            $span.classList.add('ing')
+        }
+    })
+
+}
+
+
+//点击歌单事件
+$iconList.onclick = function (e) {
+    $songList.classList.add('show')
+    if(list.length !== $$('li').length){
+        setlist()
+    } else{
+        $$('li').forEach(e => e.remove())
+        setlist()
+    }
+    e.stopPropagation()
+}//弹出歌单
+
+document.onclick = function (e) {
+    if(!e.target.classList.contains('songList')){
+        if ($songList.classList.contains('show')) {
+            $songList.classList.remove('show')
+        }
+    }  
+}

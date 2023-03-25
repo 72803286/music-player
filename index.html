@@ -118,6 +118,44 @@
             height: 3em;
             width: 3em;
         }
+
+        .songList {
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            height: 350px;
+            background-color: #fff;
+            z-index: 3;
+            border-radius: 10px;
+            transform: translateY(110%);
+            transition: all 0.3s;
+            padding-left: 25px;
+            scroll-behavior: ;
+        }
+
+        .songList.show {
+            transform: translateY(0);
+        }
+        .songList .name {
+            padding-top: 10px;
+            font-size: 16px;
+        }
+        .songList .name.ing {
+            padding-top: 10px;
+            color: red;
+            font-size: 18px;
+        }
+        .songList .author {
+            font-size: 12px;
+            color: #666;
+            padding-left: 10px;
+        }
+        .songList .author.ing {
+            font-size: 12px;
+            color: red;
+            padding-left: 10px;
+        }
     </style>
 </head>
 
@@ -126,7 +164,6 @@
         <div class="radio">
             <div class="cover" style="background-image: url(./music-player/assets/假装.jpg);"></div>
             <ol class="songList">
-
             </ol>
             <div class="panel">
                 <div class="songTitle"></div>
@@ -160,7 +197,7 @@
                     <svg class="iconpark-icon icon-go-end">
                         <use href="#go-end"></use>
                     </svg>
-                    <svg class="iconpark-icon icon-list-checkbox">
+                    <svg class="iconpark-icon icon-list">
                         <use href="#list-checkbox"></use>
                     </svg>
                 </div>
