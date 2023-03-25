@@ -203,6 +203,7 @@ $ball.onclick = function (e) {
 // 拖动进度条使用的一些函数
 let colock2 = null //优化播放卡顿
 function move(e) {
+    e.preventDefault()
     console.log(5);
     if (isDown) {
         let percent
@@ -220,10 +221,12 @@ function move(e) {
 let isDown = false
 $ball.onmousedown = function (e) {
     console.log(1);
+    e.preventDefault()
     isDown = true
 }
 $panel.onmouseup = function (e) {
     console.log(2);
+    e.preventDefault()
     isDown = false
 }
 
@@ -235,7 +238,7 @@ $panel.onmousemove = move
 
 
 // 拖动进度条移动端
-$ball.addEventListener('touchstart',function (e) {
+$proContainer.addEventListener('touchstart',function (e) {
     console.log(3);
     isDown = true    
 })
