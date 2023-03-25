@@ -117,6 +117,7 @@ const colok = function () {
 
 //点击播放
 $iconPlay.onclick = function () {
+    console.log(6);
     setInterval(colok, 1000)   //一个计时器，每1000毫秒执行一次前面的函数
     audio.play()
     $iconPlay.classList.toggle('hide')
@@ -199,46 +200,49 @@ $ball.onclick = function (e) {
 
 
 
-// // 拖动进度条使用的一些函数
-// let colock2 = null //优化播放卡顿
-// function move(e) {
-//     console.log(3);
-//     if (isDown) {
-//         let percent
-//             e.offsetX ? percent = e.offsetX / $proContainer.offsetWidth : percent = (e.touches[0].clientX - $proContainer.getBoundingClientRect().x) / $proContainer.offsetWidth
-//             $progress.style.width = percent * 100 + '%'
-//         if (colock2) {
-//             clearTimeout(colock2)
-//         }
-//         colock2 = setTimeout(() => {          
-//             audio.currentTime = audio.duration * percent
-//         }, 50)   
-//     }
-// }
-// // 拖动进度条PC端
-// let isDown = false
-// $ball.onmousedown = function (e) {
-//     e.preventDefault()
-//     return isDown = true
-// }
-// $panel.onmouseup = function (e) {
-//     return isDown = false
-// }
+// 拖动进度条使用的一些函数
+let colock2 = null //优化播放卡顿
+function move(e) {
+    console.log(5);
+    if (isDown) {
+        let percent
+            e.offsetX ? percent = e.offsetX / $proContainer.offsetWidth : percent = (e.touches[0].clientX - $proContainer.getBoundingClientRect().x) / $proContainer.offsetWidth
+            $progress.style.width = percent * 100 + '%'
+        if (colock2) {
+            clearTimeout(colock2)
+        }
+        colock2 = setTimeout(() => {          
+            audio.currentTime = audio.duration * percent
+        }, 50)   
+    }
+}
+// 拖动进度条PC端
+let isDown = false
+$ball.onmousedown = function (e) {
+    console.log(1);
+    isDown = true
+}
+$panel.onmouseup = function (e) {
+    console.log(2);
+    isDown = false
+}
 
-// $ball.onmousemove = function (e) {
-//     e.stopPropagation()
-// } //点击ball也会触发其父元素绑定的事件，所以要停止ball的事件传播
+$ball.onmousemove = function (e) {
+    e.stopPropagation()
+} //点击ball也会触发其父元素绑定的事件，所以要停止ball的事件传播
 
-// $panel.onmousemove = move
+$panel.onmousemove = move
 
 
-// // 拖动进度条移动端
-// $ball.ontouchstart = function (e) {
-//     return isDown = true    
-// }
+// 拖动进度条移动端
+$ball.addEventListener('touchstart',function (e) {
+    console.log(3);
+    isDown = true    
+})
 
-// $panel.ontouchend = function (e) {
-//     return isDown = false
-// }
+$panel.addEventListener('touchend',function (e) {
+    console.log(4);
+    isDown = false
+})
 
-// $panel.ontouchmove = move
+$panel.addEventListener('touchmove',move)
