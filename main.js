@@ -119,7 +119,6 @@ const colok = function () {
 
 //点击播放
 $iconPlay.onclick = function () {
-    console.log(6);
     setInterval(colok, 1000)   //一个计时器，每1000毫秒执行一次前面的函数
     audio.play()
     $iconPlay.classList.toggle('hide')
@@ -249,8 +248,8 @@ $panel.addEventListener('touchmove', move)
 
 
 //点击歌单事件用到的函数
-function setlist (){
-    list.forEach(function (a,i) {
+function setlist() {
+    list.forEach(function (a, i) {
         const $li = document.createElement('li')
         $li.classList.add('name')
         $li.innerText = a.title
@@ -259,7 +258,7 @@ function setlist (){
         $span.innerText = (`— ${a.author}`)
         $li.append($span)
         $songList.append($li)
-        if(i === index){
+        if (i === index) {
             $li.classList.add('ing')
             $span.classList.add('ing')
         }
@@ -271,9 +270,9 @@ function setlist (){
 //点击歌单事件
 $iconList.onclick = function (e) {
     $songList.classList.add('show')
-    if(list.length !== $$('li').length){
+    if (list.length !== $$('li').length) {
         setlist()
-    } else{
+    } else {
         $$('li').forEach(e => e.remove())
         setlist()
     }
@@ -281,9 +280,34 @@ $iconList.onclick = function (e) {
 }//弹出歌单
 
 document.onclick = function (e) {
-    if(!e.target.classList.contains('songList')){
+    if (e.target.tagName !== 'OL' && e.target.tagName !== 'LI' && e.target.tagName !== 'SPAN') {
         if ($songList.classList.contains('show')) {
             $songList.classList.remove('show')
         }
-    }  
+    }
+}
+
+
+
+//点击歌单上的歌曲进行播放
+function ing (e, i) {
+    e.classList.remove('ing')
+    if (i === index) {
+        e.classList.add('ing')
+    }
+}
+$songList.onclick = function (e) {
+    if (e.target.tagName === 'LI' || e.target.tagName === 'SPAN') {
+        let $liList = $songList.querySelectorAll('li')
+        let $liArray = Array.from($liList)
+        let $spanList = $songList.querySelectorAll('span')
+        let $spanArray = Array.from($spanList)
+        index = ($liArray.indexOf(e.target) >= 0) ? $liArray.indexOf(e.target) : $spanArray.indexOf(e.target)
+        $liList.forEach(ing)
+        $spanList.forEach(ing)
+        setSong(index)
+        if ($iconPlay.classList.contains('hide')) {
+            audio.play()
+        }
+    }
 }
